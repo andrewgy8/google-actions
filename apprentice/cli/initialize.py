@@ -1,7 +1,6 @@
 import click
 
-MAIN_CONTENT = """
-from flask import Flask
+MAIN_CONTENT = """from flask import Flask
 
 from apprentice import format_response, generate_intent_response
 
@@ -15,8 +14,8 @@ def cool_fact_generator(*args, **kwargs):
     return format_response(formatted_data)
 """
 
-REQUIREMENTS_CONTENT = """
-apprentice"""
+REQUIREMENTS_CONTENT = """apprentice
+"""
 
 
 @click.command()
