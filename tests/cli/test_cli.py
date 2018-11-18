@@ -3,12 +3,10 @@ import os
 import pytest
 from click.testing import CliRunner
 
-from apprentice.cli import (
+from apprentice.commands import (
     MAIN_CONTENT,
     REQUIREMENTS_CONTENT,
-    base_cli,
-    deploy,
-    init
+    main
 )
 
 
@@ -17,19 +15,32 @@ def runner():
     return CliRunner()
 
 
-def test_version(runner):
-    result = runner.invoke(base_cli, ['version'])
+class TestVersion:
+    def test_returns_help_message_when_called_with_argument(self, runner):
+        result = runner.invoke(main, ['version', '--help'])
 
-    assert result.exit_code == 0
-    assert 'Apprentice v' in result.output
+        assert result.exit_code == 0
+        assert 'Show installed version' in result.output
+
+    def test_returns_version_when_called(self, runner):
+        result = runner.invoke(main, ['version'])
+
+        assert result.exit_code == 0
+        assert 'Apprentice v' in result.output
 
 
 class TestDeploy:
 
+    def test_returns_help_message_when_called_with_argument(self, runner):
+        result = runner.invoke(main, ['deploy', '--help'])
+
+        assert result.exit_code == 0
+        assert 'Generate gcloud deploy command' in result.output
+
     def test_returns_command_when_short_options_given(self, runner):
-        commands = ['-f foo', '-s dir_foo',
+        commands = ['deploy', '-f foo', '-s dir_foo',
                     '-e foo_bar', '-r europe-west1']
-        result = runner.invoke(deploy, commands)
+        result = runner.invoke(main, commands)
 
         assert 'gcloud functions deploy foo --runtime python37 ' \
                '--trigger-http --source dir_foo ' \
@@ -37,9 +48,9 @@ class TestDeploy:
         assert result.exit_code == 0
 
     def test_returns_command_when_long_options_declared(self, runner):
-        commands = ['--func=foo', '--source=dir_foo',
+        commands = ['deploy', '--func=foo', '--source=dir_foo',
                     '--entry_point=foo_bar', '--region=europe-west1']
-        result = runner.invoke(deploy, commands)
+        result = runner.invoke(main, commands)
 
         assert 'gcloud functions deploy foo --runtime python37 ' \
                '--trigger-http --source dir_foo ' \
@@ -47,9 +58,17 @@ class TestDeploy:
         assert result.exit_code == 0
 
     def test_returns_region_us_central_when_no_region_defined(self, runner):
-        commands = ['-f foo', '-s dir_foo',
-                    '-e foo_bar']
-        result = runner.invoke(deploy, commands)
+        commands = ['deploy', '-f foo', '-s dir_foo', '-e foo_bar']
+        result = runner.invoke(main, commands)
+
+        assert 'gcloud functions deploy foo --runtime python37 ' \
+               '--trigger-http --source dir_foo ' \
+               '--entry-point foo_bar --region us-central1' in result.output
+        assert result.exit_code == 0
+
+    def test_returns_exit_code_when_source_dir_does_not_exist(self, runner):
+        commands = ['deploy', '-f foo', '-s dir_foo', '-e foo_bar']
+        result = runner.invoke(main, commands)
 
         assert 'gcloud functions deploy foo --runtime python37 ' \
                '--trigger-http --source dir_foo ' \
@@ -63,16 +82,21 @@ class TestDeploy:
     ])
     def test_returns_exit_code_2_when_required_arguments_not_defined(
             self, runner, commands):
-        result = runner.invoke(deploy, commands)
+        result = runner.invoke(main, ['deploy'] + commands)
 
         assert result.exit_code == 2
 
 
 class TestInit:
+    def test_returns_help_message_when_called_with_argument(self, runner):
+        result = runner.invoke(main, ['init', '--help'])
+
+        assert result.exit_code == 0
+        assert 'Initialize a project' in result.output
 
     def test_returns_main_py_file_when_called(self, runner):
         with runner.isolated_filesystem():
-            result = runner.invoke(init)
+            result = runner.invoke(main, ['init'])
 
             assert result.exit_code == 0
             assert 'Project created' in result.output
@@ -84,7 +108,7 @@ class TestInit:
 
     def test_returns_requirements_file_when_called(self, runner):
         with runner.isolated_filesystem():
-            result = runner.invoke(init)
+            result = runner.invoke(main, ['init'])
 
             assert result.exit_code == 0
             assert 'Project created' in result.output
@@ -100,7 +124,7 @@ class TestInit:
 
             os.makedirs(dir_name)
 
-            result = runner.invoke(init)
+            result = runner.invoke(main, ['init'])
 
             assert result.exit_code == 1
             assert f'{dir_name} already exists.' in result.output

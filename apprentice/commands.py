@@ -19,17 +19,17 @@ REQUIREMENTS_CONTENT = """apprentice
 
 
 @click.group()
-def base_cli():
+def main():
     pass
 
 
-@click.command()
+@click.command(help='Show installed version')
 def version():
     from .__version__ import __version__
     click.echo(f'Apprentice v{__version__}')
 
 
-@click.command()
+@click.command(help='Initialize a project')
 def init():
     dir_name = 'hello_world_agent'
     import os
@@ -51,11 +51,11 @@ def init():
     click.echo('Project created')
 
 
-@click.command()
+@click.command(help='Generate gcloud deploy command')
 @click.option('--func', '-f', required=True, type=str,
               help='Name of Google Cloud Function')
-@click.option('--source', '-s', required=True, type=str,
-              help='Directory path of main.py')
+@click.option('--source', '-s', required=True, type=click.Path(),
+              help='Directory path to main.py')
 @click.option('--entry_point', '-e', type=str, required=True,
               help='Function to be called in main.py')
 @click.option('--region', '-r', type=str, default='us-central1',
@@ -70,6 +70,6 @@ def deploy(func, source, entry_point, region):
     click.echo(f'Deploy with command: {deploy_command}')
 
 
-base_cli.add_command(version)
-base_cli.add_command(init)
-base_cli.add_command(deploy)
+main.add_command(version)
+main.add_command(init)
+main.add_command(deploy)

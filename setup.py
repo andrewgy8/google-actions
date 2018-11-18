@@ -97,13 +97,12 @@ setup(
     author_email=EMAIL,
     python_requires=REQUIRES_PYTHON,
     url=URL,
-    packages=find_packages(exclude=('tests',)),
-    # If your package is a single module, use this instead of 'packages':
-    # py_modules=['mypackage'],
-
-    # entry_points={
-    #     'console_scripts': ['mycli=mymodule:cli'],
-    # },
+    packages=find_packages(exclude=('tests', 'example')),
+    entry_points={
+        'console_scripts': [
+            'apprentice=apprentice.commands:main'
+        ]
+    },
     install_requires=REQUIRED,
     setup_requires=["pytest-runner", "flake8"],
     tests_require=["pytest"],
@@ -124,10 +123,6 @@ setup(
     # $ setup.py publish support.
     cmdclass={
         'upload': UploadCommand,
-    },
-    entry_points={
-        'console_scripts': [
-            'apprentice = apprentice.__main__:base_cli'
-        ]
     }
+
 )

@@ -12,7 +12,7 @@ Use the package manager [pip](https://pip.pypa.io/en/stable/) to install Apprent
 pip install apprentice
 ```
 
-## Usage
+## Quickstart
 
 ```python
 import random
