@@ -1,4 +1,5 @@
 import os
+from unittest.mock import patch
 
 import pytest
 from click.testing import CliRunner
@@ -16,6 +17,7 @@ def runner():
 
 
 class TestVersion:
+
     def test_returns_help_message_when_called_with_argument(self, runner):
         result = runner.invoke(main, ['version', '--help'])
 
@@ -88,6 +90,7 @@ class TestDeploy:
 
 
 class TestInit:
+
     def test_returns_help_message_when_called_with_argument(self, runner):
         result = runner.invoke(main, ['init', '--help'])
 
@@ -129,3 +132,38 @@ class TestInit:
             assert result.exit_code == 1
             assert f'{dir_name} already exists.' in result.output
             assert 'Aborted!' in result.output
+
+
+class TestRun:
+
+    def test_returns_help_message_when_called_with_argument(self, runner):
+        result = runner.invoke(main, ['run', '--help'])
+
+        assert result.exit_code == 0
+        assert 'Run a test server for local development' in result.output
+
+    @patch('apprentice.commands.run_simple')
+    def test_runs_server_when_a_project_location_is_defined(
+            self, mock_server, runner):
+        os.environ['FLASK_APP'] = 'example/main.py'
+
+        result = runner.invoke(main, ['run'])
+
+        assert result.exit_code == 0
+        assert '* Serving Flask app "example/main.py"' in result.output
+        mock_server.assert_called()
+
+    @patch('apprentice.commands.run_simple')
+    def test_returns_exit_code_when_a_project_location_undefined(
+            self, mock_server, runner):
+        del os.environ['FLASK_APP']
+
+        result = runner.invoke(main, ['run'])
+
+        assert result.exit_code == 2
+        assert 'Usage: main run [OPTIONS]\n\n' \
+               'Error: Could not locate a Flask application. ' \
+               'You did not provide the "FLASK_APP" environment variable, ' \
+               'and a "wsgi.py" or "app.py" module was not found in the ' \
+               'current directory.\n' in result.output
+        mock_server.assert_not_called()

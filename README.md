@@ -14,6 +14,49 @@ pip install apprentice
 
 ## Quickstart
 
+A Google Action project will consist of two things:
+1. A Dialogflow defined action
+1. An endpoint that your Dialogflow Action can talk to.
+
+To generate a Hello World application, you can run:
+
+```bash
+$ apprentice init
+```
+
+This will create a file structure:
+
+```bash
+hello_world_agent/
+    main.py
+    requirements.txt
+```
+
+`main.py` is the file that `gcloud` looks for to upload the function.
+It is important that the name, `main.py`, remains in order to use `gcloud` cli.
+
+## Testing
+
+To make local development quicker, you can run a local server with 
+```bash
+$ apprentice run
+```
+
+## Deployment
+
+### Note
+[`gcloud` cli](https://cloud.google.com/sdk/docs/quickstarts) must be installed and authorized for the following command 
+to work. If you wish to not have `gcloud` cli installed, you can copy the file contents via the gcloud 
+function dashboard.   
+
+```bash
+$ apprentice -f hello_world -s hello_world_agent -e hello_world
+```
+
+This will generate the command to execute a `gcloud function deploy` via the cli.  
+
+## Example Project
+
 ```python
 import random
 

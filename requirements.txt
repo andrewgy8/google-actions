@@ -1,9 +1,10 @@
-pytest>=3.10, <3.11
-pytest-responses>=0.3, <0.4
-requests>=2.20, <2.21
-responses>=0.10, <0.11
-flake8
+pytest>=3.10,<3.11
+pytest-responses>=0.3,<0.4
+requests>=2.20,<2.21
+responses>=0.10,<0.11
+flake8>=3.6,<3.7
 Flask>=1.0,<1.1
 twine>=1.12,<1.13
-flake8-isort>=2.5, <2.6
-Click
+flake8-isort>=2.5,<2.6
+Click>=7.0,<8.0
+werkzeug>=0.14,<0.15

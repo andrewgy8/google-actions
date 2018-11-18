@@ -22,7 +22,7 @@ REQUIRES_PYTHON = '>=3.6.0'
 VERSION = None
 
 # What packages are required for this module to be executed?
-REQUIRED = ['flask', 'Click']
+REQUIRED = ['flask', 'Click', 'werkzeug']
 
 # What packages are optional?
 EXTRAS = {}
