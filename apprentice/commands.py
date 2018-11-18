@@ -1,7 +1,7 @@
 import os
 
 import click
-from flask.cli import pass_script_info, show_server_banner, DispatchingApp
+from flask.cli import DispatchingApp, pass_script_info, show_server_banner
 from flask.helpers import get_env
 from werkzeug.serving import run_simple
 
@@ -37,7 +37,6 @@ def version():
 @click.command(help='Initialize a project')
 def init():
     dir_name = 'hello_world_agent'
-    import os
     if os.path.exists(dir_name):
         click.echo(f'{dir_name} already exists.')
         raise click.Abort()

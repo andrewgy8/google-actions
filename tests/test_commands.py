@@ -4,11 +4,7 @@ from unittest.mock import patch
 import pytest
 from click.testing import CliRunner
 
-from apprentice.commands import (
-    MAIN_CONTENT,
-    REQUIREMENTS_CONTENT,
-    main
-)
+from apprentice.commands import MAIN_CONTENT, REQUIREMENTS_CONTENT, main
 
 
 @pytest.fixture
