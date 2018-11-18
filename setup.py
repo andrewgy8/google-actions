@@ -127,7 +127,7 @@ setup(
     },
     entry_points={
         'console_scripts': [
-            'apprentice = apprentice.__main__:main'
+            'apprentice = apprentice.__main__:base_cli'
         ]
     }
 )
