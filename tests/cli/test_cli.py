@@ -3,8 +3,13 @@ import os
 import pytest
 from click.testing import CliRunner
 
-from apprentice.cli import base_cli, deploy, init, MAIN_CONTENT, \
-    REQUIREMENTS_CONTENT
+from apprentice.cli import (
+    MAIN_CONTENT,
+    REQUIREMENTS_CONTENT,
+    base_cli,
+    deploy,
+    init
+)
 
 
 @pytest.fixture
