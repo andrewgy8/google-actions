@@ -3,7 +3,7 @@ import random
 import requests
 from flask import Flask, request
 
-from apprentice import format_response, generate_intent_response
+from apprentice import format
 
 app = Flask(__name__)
 
@@ -32,12 +32,12 @@ ENTITIES = {
 
 @app.route('/', methods=['POST'])
 def cool_fact_generator(*args, **kwargs):
-    ac = request.json['result']['parameters']
+    action_content = request.json['result']['parameters']
     name = ENTITIES.get('name')
-    entity = ac[name]
+    entity = action_content[name]
     phrase = _fact_response(entity)
-    formatted_data = generate_intent_response(phrase)
-    return format_response(formatted_data)
+    formatted_data = format.intent_response(phrase)
+    return format.response(formatted_data)
 
 
 def _fact_response(entity):

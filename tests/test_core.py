@@ -1,14 +1,14 @@
 from flask import Response
 
-from apprentice.core import format_response, generate_intent_response
+from apprentice import format
 from apprentice.helpers import action_ctx_test
 
 
-class TestGenerateIntentResponse:
+class TestIntentResponse:
 
     def test_returns_object_when_given_text(self):
         text = 'Hello world'
-        json_response = generate_intent_response(text)
+        json_response = format.intent_response(text, expect_user_response=True)
 
         assert json_response == {
             'contextOut': [],
@@ -30,8 +30,8 @@ class TestGenerateIntentResponse:
 
     def test_returns_expect_user_response_when_set_to_false(self):
         text = 'Hello world'
-        json_response = generate_intent_response(text,
-                                                 expect_user_response=False)
+        json_response = format.intent_response(text,
+                                               expect_user_response=False)
 
         assert json_response == {
             'contextOut': [],
@@ -57,7 +57,7 @@ class TestFormatResponse:
     @action_ctx_test
     def test_returns_flask_response_object(self):
         data = {'msg': 'hello world'}
-        res = format_response(data)
+        res = format.response(data)
 
         assert isinstance(res, Response)
         assert res.json == data

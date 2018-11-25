@@ -6,8 +6,6 @@ Apprentice is a library for deploying and developing actions via Dialogflow and 
 
 ## Installation
 
-Use the package manager [pip](https://pip.pypa.io/en/stable/) to install Apprentice.
-
 ```bash
 pip install apprentice
 ```
@@ -62,13 +60,13 @@ import random
 
 import requests
 
-from apprentice import format_response, generate_intent_response
+from apprentice import format
 
 
 def cool_fact_generator(*args, **kwargs):
     data = _fact_response()
-    formatted_data = generate_intent_response(data)
-    return format_response(formatted_data)
+    formatted_data = format.intent_response(data)
+    return format.response(formatted_data)
 
 
 def _fact_response():
