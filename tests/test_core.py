@@ -8,47 +8,57 @@ class TestIntentResponse:
 
     def test_returns_object_when_given_text(self):
         text = 'Hello world'
-        json_response = format.intent_response(text, expect_user_response=True)
+        json_response = format.query_result(text, expect_user_response=True)
 
         assert json_response == {
-            'contextOut': [],
-            'data': {
+            'outputContexts': [],
+            'payload': {
                 'google': {
                     'expect_user_response': True,
                     'is_ssml': True,
                     'permissions_request': None
                 },
             },
-            'displayText': None,
-            'messages': [{
-                'speech': 'Hello world',
-                'type': 0
-            }],
+            'fulfillmentMessages': [
+                {
+                    "platform": "ACTIONS_ON_GOOGLE",
+                    "text": {
+                        "text": [
+                            'Hello world'
+                        ]
+                    }
+                }
+            ],
             'source': 'webhook',
-            'speech': 'Hello world'
+            'fulfillmentText': 'Hello world'
         }
 
     def test_returns_expect_user_response_when_set_to_false(self):
         text = 'Hello world'
-        json_response = format.intent_response(text,
-                                               expect_user_response=False)
+        json_response = format.query_result(text,
+                                            expect_user_response=False)
 
         assert json_response == {
-            'contextOut': [],
-            'data': {
+            'outputContexts': [],
+            'payload': {
                 'google': {
                     'expect_user_response': False,
                     'is_ssml': True,
                     'permissions_request': None
                 },
             },
-            'displayText': None,
-            'messages': [{
-                'speech': 'Hello world',
-                'type': 0
-            }],
+            'fulfillmentMessages': [
+                {
+                    "platform": "ACTIONS_ON_GOOGLE",
+                    "text": {
+                        "text": [
+                            'Hello world'
+                        ]
+                    }
+                }
+            ],
             'source': 'webhook',
-            'speech': 'Hello world'
+            'fulfillmentText': 'Hello world'
         }
 
 
