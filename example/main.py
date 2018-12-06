@@ -29,7 +29,7 @@ ENTITIES = {
 }
 
 
-@apr.action()
+@apr.route('/', methods=['POST'])
 def cool_fact_generator(*args, **kwargs):
     reply = _fact_response('name')
     return apr.response(reply)
