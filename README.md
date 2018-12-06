@@ -2,7 +2,7 @@
 [![Build Status](https://travis-ci.com/andrewgy8/apprentice.svg?branch=master)](https://travis-ci.com/andrewgy8/apprentice)
 [![PyPI version](https://badge.fury.io/py/apprentice.svg)](https://badge.fury.io/py/apprentice)
 
-Apprentice is a library for deploying and developing actions via Dialogflow and Google Cloud Functions.
+Apprentice is a framework for developing actions via Dialogflow and Google Cloud Functions.
 
 ## Installation
 
@@ -64,7 +64,7 @@ apr = Apprentice(__name__)
 @apr.route('/', methods=['POST'])
 def hello_world(*args, **kwargs):
     reply = 'Hello world!'
-    return apr.response(reply)
+    return apr.generate_text_response(reply)
 
 ```
 
