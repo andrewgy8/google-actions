@@ -1,11 +1,10 @@
 import random
 
 import requests
-from flask import Flask, request
 
-from apprentice import format
+from apprentice import Apprentice
 
-app = Flask(__name__)
+apr = Apprentice(__name__)
 
 ENTITIES = {
     "name": "History",
@@ -30,14 +29,10 @@ ENTITIES = {
 }
 
 
-@app.route('/', methods=['POST'])
+@apr.action()
 def cool_fact_generator(*args, **kwargs):
-    action_content = request.json['result']['parameters']
-    name = ENTITIES.get('name')
-    entity = action_content[name]
-    phrase = _fact_response(entity)
-    formatted_data = format.intent_response(phrase)
-    return format.response(formatted_data)
+    reply = _fact_response('name')
+    return apr.response(reply)
 
 
 def _fact_response(entity):

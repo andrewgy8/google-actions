@@ -1,7 +1,7 @@
 import pytest
 import responses
 
-from example.main import _fact_response, app
+from example.main import _fact_response, apr
 
 
 @pytest.fixture(autouse=True)
@@ -16,7 +16,7 @@ def api_response(historical_fact_response):
 class TestCoolFactGenerator:
 
     def test_returns_response_with_json_when_called(self, birth_post_data):
-        with app.test_client() as c:
+        with apr.flask.test_client() as c:
             res = c.post('/', json=birth_post_data)
 
         assert res.json == {
@@ -46,7 +46,7 @@ class TestCoolFactGenerator:
         }
 
     def test_returns_content_type_json_when_called(self, birth_post_data):
-        with app.test_client() as c:
+        with apr.flask.test_client() as c:
             res = c.post('/', json=birth_post_data)
 
         assert res.headers['Content-Type'] == 'application/json'

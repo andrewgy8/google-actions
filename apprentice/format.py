@@ -1,6 +1,6 @@
 import json
 
-from flask import make_response
+from flask import Flask, make_response
 
 
 def response(data):
@@ -30,3 +30,25 @@ def intent_response(text, expect_user_response=True):
         'contextOut': [],
         'source': 'webhook'
     }
+
+
+class Apprentice(Flask):
+
+    def __init__(self, name, *args, **kwargs):
+        self.name = name
+        self.flask = Flask(__name__)
+        super().__init__(__name__, *args, **kwargs)
+
+    def action(self, route='/'):
+        def decorator(function):
+            @self.flask.route(route, methods=['POST', 'GET'])
+            def wrapper(*args, **kwargs):
+                return function(*args, **kwargs)
+
+            return wrapper
+
+        return decorator
+
+    def response(self, reply):
+        res = intent_response(reply)
+        return response(res)
