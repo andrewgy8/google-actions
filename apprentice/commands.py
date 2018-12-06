@@ -5,18 +5,15 @@ from flask.cli import DispatchingApp, pass_script_info, show_server_banner
 from flask.helpers import get_env
 from werkzeug.serving import run_simple
 
-MAIN_CONTENT = """from flask import Flask
+MAIN_CONTENT = """from apprentice import Apprentice
 
-from apprentice import format_response, generate_intent_response
-
-app = Flask(__name__)
+apr = Apprentice(__name__)
 
 
-@app.route('/', methods=['POST'])
+@apr.action()
 def hello_world(*args, **kwargs):
-    phrase = "Hello there! I'm your Hello World Agent"
-    formatted_data = generate_intent_response(phrase)
-    return format_response(formatted_data)
+    reply = 'Hello world!'
+    return apr.response(reply)
 """
 
 REQUIREMENTS_CONTENT = """apprentice
