@@ -1,5 +1,9 @@
 # Changelog
 
+### v0.2.0
+- Update to Dialogflow API 2.0
+- Fix routing issue
+
 ### v0.1.7
 
 Clean up the public API interface for Apprentice (#24)
