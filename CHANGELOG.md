@@ -1,5 +1,9 @@
 # Changelog
 
+### v0.3.0
+- Move functions to apprentice encapsulation
+- Remove `helpers` module.
+
 ### v0.2.0
 - Update to Dialogflow API 2.0
 - Fix routing issue
