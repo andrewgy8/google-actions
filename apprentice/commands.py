@@ -10,10 +10,11 @@ MAIN_CONTENT = """from apprentice import Apprentice
 apr = Apprentice(__name__)
 
 
-@apr.action()
+@apr.route('/', methods=['POST'])
 def hello_world(*args, **kwargs):
     reply = 'Hello world!'
     return apr.response(reply)
+
 """
 
 REQUIREMENTS_CONTENT = """apprentice
