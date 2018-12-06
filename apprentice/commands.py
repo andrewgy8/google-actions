@@ -13,7 +13,7 @@ apr = Apprentice(__name__)
 @apr.route('/', methods=['POST'])
 def hello_world(*args, **kwargs):
     reply = 'Hello world!'
-    return apr.response(reply)
+    return apr.generate_text_response(reply)
 
 """
 
