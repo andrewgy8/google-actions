@@ -100,7 +100,7 @@ class TestInit:
             assert result.exit_code == 0
             assert 'Project created' in result.output
 
-            with open('hello_world_agent/main.py', 'r') as f:
+            with open('main.py', 'r') as f:
                 contents = f.read()
 
             assert MAIN_CONTENT in contents
@@ -112,22 +112,10 @@ class TestInit:
             assert result.exit_code == 0
             assert 'Project created' in result.output
 
-            with open('hello_world_agent/requirements.txt', 'r') as f:
+            with open('requirements.txt', 'r') as f:
                 contents = f.read()
 
             assert REQUIREMENTS_CONTENT in contents
-
-    def test_returns_exit_code_2_when_directory_already_exists(self, runner):
-        dir_name = 'hello_world_agent'
-        with runner.isolated_filesystem():
-
-            os.makedirs(dir_name)
-
-            result = runner.invoke(main, ['init'])
-
-            assert result.exit_code == 1
-            assert f'{dir_name} already exists.' in result.output
-            assert 'Aborted!' in result.output
 
 
 class TestRun:
