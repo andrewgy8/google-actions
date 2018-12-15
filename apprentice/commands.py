@@ -1,3 +1,5 @@
+import os
+
 import click
 from flask.cli import DispatchingApp, pass_script_info, show_server_banner
 from flask.helpers import get_env
@@ -9,7 +11,7 @@ apr = Apprentice(__name__)
 
 
 @apr.route('/', methods=['POST'])
-def webhook(*args, **kwargs):
+def {function_name}(*args, **kwargs):
     reply = 'Hello world!'
     return apr.generate_text_response(reply)
 
@@ -31,9 +33,19 @@ def version():
 
 
 @click.command(help='Initialize a project')
-def init():
-    with open(f'main.py', 'w') as file:
-        file.write(MAIN_CONTENT)
+@click.option('--webhook', '-w', default='webhook', help='Name your webhook function')
+def init(webhook):
+    dir_name = 'hello_world_agent'
+    if os.path.exists(dir_name):
+        click.echo(f'{dir_name} already exists.')
+        raise click.Abort()
+
+    main_content = MAIN_CONTENT.format(function_name=webhook)
+    click.echo(f'Creating a project in {dir_name}')
+
+    os.makedirs(dir_name)
+    with open(f'{dir_name}/main.py', 'w') as file:
+        file.write(main_content)
         file.close()
 
     with open(f'requirements.txt', 'w') as file:

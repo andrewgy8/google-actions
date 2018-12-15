@@ -93,24 +93,27 @@ class TestInit:
         assert result.exit_code == 0
         assert 'Initialize a project' in result.output
 
-    def test_returns_main_py_file_when_called(self, runner):
+    def test_returns_default_function_name_when_called_without_argument(self, runner):
         with runner.isolated_filesystem():
-            result = runner.invoke(main, ['init'])
-
-            assert result.exit_code == 0
-            assert 'Project created' in result.output
+            runner.invoke(main, ['init'])
 
             with open('main.py', 'r') as f:
                 contents = f.read()
 
-            assert MAIN_CONTENT in contents
+            assert 'def webhook(' in contents
+
+    def test_returns_custom_name_function_when_called_with_argument(self, runner):
+        with runner.isolated_filesystem():
+            runner.invoke(main, ['init',  '--webhook=testing'])
+
+            with open('main.py', 'r') as f:
+                contents = f.read()
+
+            assert 'def testing(' in contents
 
     def test_returns_requirements_file_when_called(self, runner):
         with runner.isolated_filesystem():
-            result = runner.invoke(main, ['init'])
-
-            assert result.exit_code == 0
-            assert 'Project created' in result.output
+            runner.invoke(main, ['init'])
 
             with open('requirements.txt', 'r') as f:
                 contents = f.read()
