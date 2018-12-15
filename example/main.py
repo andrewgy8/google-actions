@@ -46,6 +46,6 @@ def _fact_response(entity):
     year = fact['year']
     text = fact['text']
     if entity == 'birth':
-        return f'Today in the year {year}, {text} was born.'
+        return f'Today in the year {year}, {text} was born.'  # noqa
     else:
         return f'Today in the year {year}, {text}'
