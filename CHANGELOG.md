@@ -1,5 +1,8 @@
 # Changelog
 
+### v0.3.1
+- Remove nested directories from init command
+
 ### v0.3.0
 - Move functions to apprentice encapsulation
 - Remove `helpers` module.
