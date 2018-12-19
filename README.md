@@ -25,7 +25,7 @@ $ apprentice init
 This will create a file structure:
 
 ```bash
-hello_world_agent/
+src/
     main.py
     requirements.txt
 ```
@@ -62,7 +62,7 @@ apr = Apprentice(__name__)
 
 
 @apr.route('/', methods=['POST'])
-def hello_world(*args, **kwargs):
+def webhook(*args, **kwargs):
     reply = 'Hello world!'
     return apr.generate_text_response(reply)
 
