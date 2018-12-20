@@ -2,7 +2,14 @@
 [![Build Status](https://travis-ci.com/andrewgy8/apprentice.svg?branch=master)](https://travis-ci.com/andrewgy8/apprentice)
 [![PyPI version](https://badge.fury.io/py/apprentice.svg)](https://badge.fury.io/py/apprentice)
 
-Apprentice is a framework for developing actions via Dialogflow and Google Cloud Functions.
+Apprentice is a framework built for developing Google Actions 
+via [Dialogflow](https://dialogflow.com) and 
+[Google Cloud (serverless) Functions](https://cloud.google.com/functions/).
+
+Includes:
+- plug-and-play feel to get going quickly
+- basic Dialogflow API 2.0 response handling
+- local setup for quick iteration
 
 ## Installation
 
@@ -13,10 +20,10 @@ pip install apprentice
 ## Quickstart
 
 A Google Action project will consist of two things:
-1. A Dialogflow defined action
-1. An endpoint that your Dialogflow Action can talk to.
+1. [Dialogflow Intent](https://dialogflow.com/docs/intents)
+1. A webhook to satisfy your users intent
 
-To generate a Hello World application, you can run:
+To generate a "Hello World" webhook, run:
 
 ```bash
 $ apprentice init
@@ -30,15 +37,16 @@ src/
     requirements.txt
 ```
 
-`main.py` is the file that `gcloud` looks for to upload the function.
-It is important that the name, `main.py`, remains in order to use `gcloud` cli.
-
-## Testing
-
-To make local development quicker, you can run a local server with 
+Run a local server with 
 ```bash
 $ apprentice run
 ```
+
+and expose to localhost port via an https tunnel. Then add the url to the fulfillment
+webhook in Dialogflow.  
+
+For a more indepth example please see the tutorial I wrote 
+[here](https://medium.com/@andrew_32881/hey-google-talk-to-24dfd336acd).
 
 ## Deployment
 
@@ -52,21 +60,6 @@ $ apprentice -f hello_world -s hello_world_agent -e hello_world
 ```
 
 This will generate the command to execute a `gcloud function deploy` via the cli.  
-
-## Getting Started
-
-```python
-from apprentice import Apprentice
-
-apr = Apprentice(__name__)
-
-
-@apr.route('/', methods=['POST'])
-def webhook(*args, **kwargs):
-    reply = 'Hello world!'
-    return apr.generate_text_response(reply)
-
-```
 
 ## Contributing
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
