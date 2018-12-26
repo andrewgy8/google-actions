@@ -20,21 +20,32 @@ class Apprentice(Flask):
         return resp
 
     def query_result(self, text, expect_user_response=True):
+        response = Response(text, expect_user_response)
+        return response.build()
+
+
+class Response:
+
+    def __init__(self, text, expect_reply):
+        self.text = text
+        self.expect_reply = expect_reply
+
+    def build(self):
         return {
-            'fulfillmentText': text,
+            'fulfillmentText': self.text,
             'fulfillmentMessages': [
                 {
                     "platform": "ACTIONS_ON_GOOGLE",
                     "text": {
                         "text": [
-                            text
+                            self.text
                         ]
                     }
                 }
             ],
             'payload': {
                 'google': {
-                    "expect_user_response": expect_user_response,
+                    "expect_user_response": self.expect_reply,
                     "is_ssml": True,
                     "permissions_request": None,
                 }
