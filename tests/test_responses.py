@@ -1,9 +1,9 @@
 import pytest
 
-from apprentice.format import Response
+from apprentice.responses import BaseResponse, TextResponse
 
 
-class TestResponse:
+class TestBaseResponse:
 
     @pytest.mark.parametrize('expect_response', [
         True,
@@ -12,8 +12,23 @@ class TestResponse:
     def test_returns_basic_text_response_when_expect_response_specified(
             self, expect_response):
         text = 'Hello world'
-        res = Response(text, expect_reply=expect_response)
+        res = BaseResponse(text, expect_reply=expect_response)
 
+        with pytest.raises(NotImplementedError):
+            res.build()
+
+
+class TestTextResponse:
+
+    @pytest.mark.parametrize('expect_response', [
+        True,
+        False
+    ])
+    def test_returns_basic_text_response_when_expect_response_specified(
+            self, expect_response):
+        text = 'Hello world'
+        res = TextResponse(text, expect_reply=expect_response)
+        print(res.base_data)
         assert res.build() == {
             'outputContexts': [],
             'payload': {
