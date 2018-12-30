@@ -32,7 +32,8 @@ ENTITIES = {
 @apr.route('/', methods=['POST'])
 def cool_fact_generator(*args, **kwargs):
     reply = _fact_response('name')
-    return apr.generate_text_response(reply)
+    # return apr.generate_text_response(reply)
+    return apr.generate_card_response(reply)
 
 
 def _fact_response(entity):
