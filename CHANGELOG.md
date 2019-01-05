@@ -1,5 +1,11 @@
 # Changelog
 
+### Unreleased
+
+- SimpleResponse and BasicCardResponse per the docs
+- Add .editorconfig
+- Update example to use the new response objects
+
 ### v0.3.1
 - Remove nested directories from init command
 
