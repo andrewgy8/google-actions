@@ -1,6 +1,6 @@
 import pytest
 
-from apprentice.responses import BaseResponse, TextResponse
+from apprentice.responses import _BaseResponse, SimpleResponse, BasicCardResponse
 
 
 class TestBaseResponse:
@@ -12,10 +12,29 @@ class TestBaseResponse:
     def test_returns_basic_text_response_when_expect_response_specified(
             self, expect_response):
         text = 'Hello world'
-        res = BaseResponse(text, expect_reply=expect_response)
+        res = _BaseResponse(text, expect_reply=expect_response)
 
-        with pytest.raises(NotImplementedError):
-            res.build()
+        assert res.build() == {
+            'payload': {
+                'google': {
+                    'expect_user_response': expect_response,
+                    'is_ssml': True,
+                    'permissions_request': None,
+                    'richResponse': {
+                        'items': [
+                            {
+                                "simpleResponse": {
+                                    "textToSpeech": 'Hello world',
+                                    "displayText": 'Hello world'
+
+                                }
+                            }
+                        ]
+                    }
+                }
+            },
+            'source': 'webhook'
+        }
 
 
 class TestTextResponse:
@@ -27,7 +46,7 @@ class TestTextResponse:
     def test_returns_basic_text_response_when_expect_response_specified(
             self, expect_response):
         text = 'Hello world'
-        res = TextResponse(text, expect_reply=expect_response)
+        res = SimpleResponse(text, expect_reply=expect_response)
 
         assert res.build() == {
             'payload': {
@@ -61,27 +80,56 @@ class TestCardResponse:
     def test_returns_basic_text_response_when_expect_response_specified(
             self, expect_response):
         text = 'Hello world'
-        res = TextResponse(text, expect_reply=expect_response)
+        title = 'This is the card title'
+        image_url = 'https://www.some-image-uri.com'
+        image_accessibility_text = 'Image description text'
+        button = {
+            "title": "Click Me!",
+            "openUrlAction": {
+                'url': "https://www.button-direction-uri.com"}
+        }
 
+        res = BasicCardResponse(speech=text,
+                                title=title,
+                                image_url=image_url,
+                                image_accessibility_text=image_accessibility_text,
+                                button=button,
+                                expect_reply=expect_response)
         assert res.build() == {
-            'outputContexts': [],
             'payload': {
                 'google': {
                     'expect_user_response': expect_response,
                     'is_ssml': True,
-                    'permissions_request': None
-                },
-            },
-            'fulfillmentMessages': [
-                {
-                    "platform": "ACTIONS_ON_GOOGLE",
-                    "text": {
-                        "text": [
-                            'Hello world'
+                    'permissions_request': None,
+                    'richResponse': {
+                        'items': [
+                            {
+                                "simpleResponse": {
+                                    "textToSpeech": 'Hello world',
+                                    "displayText": 'Hello world'
+
+                                }
+                            },
+                            {
+                                "basicCard": {
+                                    "buttons": [
+                                        {
+                                            "title": "Click Me!",
+                                            "openUrlAction": {
+                                                'url': "https://www.button-direction-uri.com"
+                                            }
+                                        }
+                                    ],
+                                    "image": {
+                                        "url": "https://www.some-image-uri.com",
+                                        "accessibilityText": "Image description text"
+                                    },
+                                    "title": "This is the card title"
+                                }
+                            }
                         ]
                     }
                 }
-            ],
-            'source': 'webhook',
-            'fulfillmentText': 'Hello world'
+            },
+            'source': 'webhook'
         }

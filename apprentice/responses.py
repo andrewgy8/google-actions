@@ -1,6 +1,9 @@
-class BaseResponse:
+class _BaseResponse:
 
-    def __init__(self):
+    def __init__(self, speech, expect_reply, display_text=None):
+        self.speech = speech
+        self.display_text = display_text if display_text else speech
+        self.expect_reply = expect_reply
         self.base_data = {
             'payload': {
                 'google': {
@@ -16,21 +19,9 @@ class BaseResponse:
         }
 
     def build(self):
-        raise NotImplementedError
-
-
-class TextResponse(BaseResponse):
-
-    def __init__(self, text, expect_reply, display_text=None):
-        super().__init__()
-        self.text = text
-        self.expect_reply = expect_reply
-        self.display_text = display_text if display_text else text
-
-    def build(self):
         message = {
             "simpleResponse": {
-                "textToSpeech": self.text,
+                "textToSpeech": self.speech,
                 "displayText": self.display_text
             }
         }
@@ -39,17 +30,33 @@ class TextResponse(BaseResponse):
         return self.base_data
 
 
-class CardResponse(BaseResponse):
+class SimpleResponse(_BaseResponse):
+    """ Simple text response.
+    Simple response with both text to speech and display settings.
+    """
+    pass
 
-    def __init__(self, text, title, subtitle, image_uri, button, expect_reply):
-        super().__init__()
-        self.text = text
-        self.expect_reply = expect_reply
+
+class BasicCardResponse(_BaseResponse):
+
+    def __init__(self, speech, title, image_url, image_accessibility_text, button, expect_reply):
+        super().__init__(speech, expect_reply)
         self.title = title
-        self.subtitle = subtitle
-        self.image_uri = image_uri
+        self.image_uri = image_url
+        self.image_accessibility_text = image_accessibility_text
         self.button = button
 
     def build(self):
-        self.base_data['payload']['google']['expect_user_response'] = self.expect_reply
+        super().build()
+        message = {
+            "basicCard": {
+                "buttons": [self.button],
+                "image": {
+                    "url": self.image_uri,
+                    "accessibilityText": self.image_accessibility_text
+                },
+                "title": self.title
+            }
+        }
+        self.base_data['payload']['google']['richResponse']['items'].append(message)
         return self.base_data
