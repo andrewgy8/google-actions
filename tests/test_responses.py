@@ -30,26 +30,25 @@ class TestTextResponse:
         res = TextResponse(text, expect_reply=expect_response)
 
         assert res.build() == {
-            'outputContexts': [],
             'payload': {
                 'google': {
                     'expect_user_response': expect_response,
                     'is_ssml': True,
-                    'permissions_request': None
-                },
-            },
-            'fulfillmentMessages': [
-                {
-                    "platform": "ACTIONS_ON_GOOGLE",
-                    "text": {
-                        "text": [
-                            'Hello world'
+                    'permissions_request': None,
+                    'richResponse': {
+                        'items': [
+                            {
+                                "simpleResponse": {
+                                    "textToSpeech": 'Hello world',
+                                    "displayText": 'Hello world'
+
+                                }
+                            }
                         ]
                     }
                 }
-            ],
-            'source': 'webhook',
-            'fulfillmentText': 'Hello world'
+            },
+            'source': 'webhook'
         }
 
 
