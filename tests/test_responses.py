@@ -96,7 +96,7 @@ class TestCardResponse:
         res = BasicCardResponse(speech=text,
                                 title=title,
                                 image_url=image_url,
-                                image_accessibility_text=image_accessibility_text,
+                                image_accessibility_text=image_accessibility_text,  # noqa
                                 button=button,
                                 expect_reply=expect_response)
         assert res.build() == {
@@ -120,13 +120,13 @@ class TestCardResponse:
                                         {
                                             "title": "Click Me!",
                                             "openUrlAction": {
-                                                'url': "https://www.button-direction-uri.com"
+                                                'url': "https://www.button-direction-uri.com"  # noqa
                                             }
                                         }
                                     ],
                                     "image": {
-                                        "url": "https://www.some-image-uri.com",
-                                        "accessibilityText": "Image description text"
+                                        "url": "https://www.some-image-uri.com",  # noqa
+                                        "accessibilityText": "Image description text"  # noqa
                                     },
                                     "title": "This is the card title"
                                 }

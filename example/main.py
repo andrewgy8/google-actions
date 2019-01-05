@@ -3,7 +3,6 @@ import random
 import requests
 
 from apprentice import Apprentice, SimpleResponse
-from apprentice.responses import BasicCardResponse
 
 apr = Apprentice(__name__)
 

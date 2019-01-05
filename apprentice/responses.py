@@ -25,8 +25,9 @@ class _BaseResponse:
                 "displayText": self.display_text
             }
         }
-        self.base_data['payload']['google']['richResponse']['items'].append(message)
-        self.base_data['payload']['google']['expect_user_response'] = self.expect_reply
+        payload = self.base_data['payload']['google']
+        payload['richResponse']['items'].append(message)
+        payload['expect_user_response'] = self.expect_reply
         return self.base_data
 
 
@@ -64,5 +65,6 @@ class BasicCardResponse(_BaseResponse):
                 "title": self.title
             }
         }
-        self.base_data['payload']['google']['richResponse']['items'].append(message)
+        payload = self.base_data['payload']['google']
+        payload['richResponse']['items'].append(message)
         return self.base_data
