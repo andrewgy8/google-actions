@@ -2,7 +2,8 @@ import random
 
 import requests
 
-from apprentice import Apprentice
+from apprentice import Apprentice, SimpleResponse
+from apprentice.responses import BasicCardResponse
 
 apr = Apprentice(__name__)
 
@@ -32,8 +33,8 @@ ENTITIES = {
 @apr.route('/', methods=['POST'])
 def cool_fact_generator(*args, **kwargs):
     reply = _fact_response('name')
-    # return apr.generate_text_response(reply)
-    return apr.generate_card_response(reply)
+    obj = SimpleResponse(speech=reply, expect_reply=True)
+    return apr.response_from_object(obj)
 
 
 def _fact_response(entity):

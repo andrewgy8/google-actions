@@ -11,26 +11,25 @@ class TestIntentResponse:
         json_response = apr.query_result(text, expect_user_response=True)
 
         assert json_response == {
-            'outputContexts': [],
             'payload': {
                 'google': {
                     'expect_user_response': True,
                     'is_ssml': True,
-                    'permissions_request': None
-                },
-            },
-            'fulfillmentMessages': [
-                {
-                    "platform": "ACTIONS_ON_GOOGLE",
-                    "text": {
-                        "text": [
-                            'Hello world'
+                    'permissions_request': None,
+                    'richResponse': {
+                        'items': [
+                            {
+                                "simpleResponse": {
+                                    "textToSpeech": 'Hello world',
+                                    "displayText": 'Hello world'
+
+                                }
+                            }
                         ]
                     }
-                }
-            ],
+                },
+            },
             'source': 'webhook',
-            'fulfillmentText': 'Hello world'
         }
 
     def test_returns_expect_user_response_when_set_to_false(self):
@@ -39,26 +38,25 @@ class TestIntentResponse:
         json_response = apr.query_result(text, expect_user_response=False)
 
         assert json_response == {
-            'outputContexts': [],
             'payload': {
                 'google': {
                     'expect_user_response': False,
                     'is_ssml': True,
-                    'permissions_request': None
-                },
-            },
-            'fulfillmentMessages': [
-                {
-                    "platform": "ACTIONS_ON_GOOGLE",
-                    "text": {
-                        "text": [
-                            'Hello world'
+                    'permissions_request': None,
+                    'richResponse': {
+                        'items': [
+                            {
+                                "simpleResponse": {
+                                    "textToSpeech": 'Hello world',
+                                    "displayText": 'Hello world'
+
+                                }
+                            }
                         ]
                     }
-                }
-            ],
+                },
+            },
             'source': 'webhook',
-            'fulfillmentText': 'Hello world'
         }
 
 

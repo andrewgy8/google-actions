@@ -2,7 +2,7 @@ import json
 
 from flask import Flask, make_response
 
-from .responses import SimpleResponse, BasicCardResponse
+from .responses import SimpleResponse
 
 
 class Apprentice(Flask):
@@ -15,12 +15,8 @@ class Apprentice(Flask):
         response_object = self.query_result(reply)
         return self.generate_response(response_object)
 
-    def generate_card_response(self, reply):
-        response = BasicCardResponse(
-            speech="foo", title=reply, subtitle='bar', image_uri='',
-            button=None, expect_reply=True)
-        response_object = response.build()
-        return self.generate_response(response_object)
+    def response_from_object(self, response_obj):
+        return self.generate_response(response_obj.build())
 
     def generate_response(self, data):
         resp = json.dumps(data, indent=4)
@@ -31,4 +27,3 @@ class Apprentice(Flask):
     def query_result(self, text, expect_user_response=True):
         response = SimpleResponse(text, expect_user_response)
         return response.build()
-

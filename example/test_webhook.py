@@ -20,35 +20,38 @@ class TestCoolFactGenerator:
             res = c.post('/', json=birth_post_data)
 
         assert res.json == {
-            'fulfillmentMessages': [
-                {
-                    'platform': 'ACTIONS_ON_GOOGLE',
-                    'text': {
-                        'text': [
-                            'Today in the year 308, At '
-                            'Carnuntum, Emperor emeritus '
-                            'Diocletian confers with Galerius, '
-                            'Augustus of the East, and '
-                            'Maximianus, the recently returned '
-                            'former Augustus of the West, in '
-                            'an attempt to end the civil wars '
-                            'of the Tetrarchy.'
-                        ]
-                    }
-                }
-            ],
-            'fulfillmentText': 'Today in the year 308, At Carnuntum, Emperor '
-                               'emeritus Diocletian confers with Galerius, '
-                               'Augustus of the East, and Maximianus, the '
-                               'recently returned former Augustus of the '
-                               'West, in an attempt to end the civil wars of '
-                               'the Tetrarchy.',
-            'outputContexts': [],
             'payload': {
                 'google': {
                     'expect_user_response': True,
                     'is_ssml': True,
-                    'permissions_request': None
+                    'permissions_request': None,
+                    'richResponse': {
+                        'items': [
+                            {
+                                'simpleResponse': {
+                                    'textToSpeech':
+                                        'Today in the year 308, At '
+                                        'Carnuntum, Emperor emeritus '
+                                        'Diocletian confers with Galerius, '
+                                        'Augustus of the East, and '
+                                        'Maximianus, the recently returned '
+                                        'former Augustus of the West, in '
+                                        'an attempt to end the civil wars '
+                                        'of the Tetrarchy.',
+                                    'displayText':
+                                        'Today in the year 308, At '
+                                        'Carnuntum, Emperor emeritus '
+                                        'Diocletian confers with Galerius, '
+                                        'Augustus of the East, and '
+                                        'Maximianus, the recently returned '
+                                        'former Augustus of the West, in '
+                                        'an attempt to end the civil wars '
+                                        'of the Tetrarchy.'
+
+                                }
+                            }
+                        ]
+                    }
                 }
             },
             'source': 'webhook'

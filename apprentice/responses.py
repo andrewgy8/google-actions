@@ -39,7 +39,13 @@ class SimpleResponse(_BaseResponse):
 
 class BasicCardResponse(_BaseResponse):
 
-    def __init__(self, speech, title, image_url, image_accessibility_text, button, expect_reply):
+    def __init__(self,
+                 speech,
+                 title,
+                 image_url,
+                 image_accessibility_text,
+                 button,
+                 expect_reply):
         super().__init__(speech, expect_reply)
         self.title = title
         self.image_uri = image_url

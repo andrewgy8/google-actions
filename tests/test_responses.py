@@ -1,6 +1,10 @@
 import pytest
 
-from apprentice.responses import _BaseResponse, SimpleResponse, BasicCardResponse
+from apprentice.responses import (
+    BasicCardResponse,
+    SimpleResponse,
+    _BaseResponse
+)
 
 
 class TestBaseResponse:
