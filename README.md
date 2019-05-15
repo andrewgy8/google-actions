@@ -26,7 +26,7 @@ We recommend you read the full tutorial [here](https://medium.com/@andrew_32881/
 A Google Action project will consist of two things:
 1. [Dialogflow Intent](https://dialogflow.com/docs/intents)
 1. A webhook to satisfy your users intent
-
+ 
 To generate a "Hello World" webhook, run:
 
 ```bash
