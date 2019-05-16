@@ -13,16 +13,14 @@ install:
 script:
 - python setup.py test
 - python setup.py flake8
-jobs:
-  include:
-    - stage: deploy
-      python: "3.7"
-      install: skip
-      script: skip
-      deploy:
-        provider: pypi
-        user: andrewgy8
-        password:
-          secure: b2s0FaiH1QbxcQOpDhr5mLPXzeD8mAKai/SGOZyi8f6VoFmDXpdwomNlT+GcmIt+BvRYOolhFri0E5kL37kNrDgd9eR+L4om65xela4n8I7ZYgnU9cSoH30ayhYmJbtzpydH0Isx686mH/Bv31dPgbeOc6+Zeqe922P2MwtYQADBpcUJhr1TZXcdxgsCMsBeQVpaXkX1+kS7+yCBIw3MhsfcL5Y+ADu2XqwpiwTZB7+gsjgHrAeMlCBCQKG/eUipab0v9KE2DcB4VRU9wH2Lph/3zLn0TgKrbSR6LNaxGm7dCRODKcZgKUVfVdBl4gyVrqI52a7u7IGPrb05H7n4HZQI9WFV0vr4vZkO9NNKKBs69/8t9RLmcNLgjBw3isBgSfK74Vmr+za0oRQoZJTB9HDeE9pg4gaXyoYjlD40JYP9+hFIPzSKprVxklsYEwl1VIANYelbn7ImT+Tl63u/po+iesLO14zs2OPCXDBrhoL5MsqAa1muzsXWwbAywmkvoQBelWv+LksNpp5CpmB75pvnyZD5ewY5jRF8wAogmlESQIoXjM7cULhLrzbyYaIRbTytmpMfrRIqbthEz7YE4FerNzrLzRnfiEGcjk7pE8QRlQLRm3CpGb6iLgKYGjEG3bf19cNx8KezDevetBpQflgow6tKUYPppN3UAzlG0w8=
-        on:
-          tags: true
+
+deploy:
+  install: skip
+  script: skip
+  provider: pypi
+  user: andrewgy8
+  password:
+    secure: b2s0FaiH1QbxcQOpDhr5mLPXzeD8mAKai/SGOZyi8f6VoFmDXpdwomNlT+GcmIt+BvRYOolhFri0E5kL37kNrDgd9eR+L4om65xela4n8I7ZYgnU9cSoH30ayhYmJbtzpydH0Isx686mH/Bv31dPgbeOc6+Zeqe922P2MwtYQADBpcUJhr1TZXcdxgsCMsBeQVpaXkX1+kS7+yCBIw3MhsfcL5Y+ADu2XqwpiwTZB7+gsjgHrAeMlCBCQKG/eUipab0v9KE2DcB4VRU9wH2Lph/3zLn0TgKrbSR6LNaxGm7dCRODKcZgKUVfVdBl4gyVrqI52a7u7IGPrb05H7n4HZQI9WFV0vr4vZkO9NNKKBs69/8t9RLmcNLgjBw3isBgSfK74Vmr+za0oRQoZJTB9HDeE9pg4gaXyoYjlD40JYP9+hFIPzSKprVxklsYEwl1VIANYelbn7ImT+Tl63u/po+iesLO14zs2OPCXDBrhoL5MsqAa1muzsXWwbAywmkvoQBelWv+LksNpp5CpmB75pvnyZD5ewY5jRF8wAogmlESQIoXjM7cULhLrzbyYaIRbTytmpMfrRIqbthEz7YE4FerNzrLzRnfiEGcjk7pE8QRlQLRm3CpGb6iLgKYGjEG3bf19cNx8KezDevetBpQflgow6tKUYPppN3UAzlG0w8=
+  on:
+    tags: true
+    python: "3.7"
